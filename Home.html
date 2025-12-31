@@ -646,11 +646,11 @@ document.addEventListener('DOMContentLoaded', function() {
       // Get API base URL
       const API_BASE_URL = 'https://3awn-production.up.railway.app:8080/api'; // Change this to your backend URL
       
-      socket = io(API_BASE_URL, {
+      socket = io("https://3awn-production.up.railway.app", {
         auth: {
           token: token
         },
-        transports: ['websocket', 'polling']
+        transports: ['websocket']
       });
 
       socket.on('connect', () => {
