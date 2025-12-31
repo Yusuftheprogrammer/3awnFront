@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="Media/Icon.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="Media.css">
+  <title>عون</title>
+</head>
+<body style="background-color: #f7f7f7;" >
+  <div class="Menu">
+    
+    <div class="Menu_content">
+      <a href="index.html" style="width: 30%;" class="Option" ><img class="logo" alt="" src="Media/logo.png"></a>
+
+       <!-- زر البرجر الذي سيظهر على الأجهزة الصغيرة -->
+        <button id="burgerButton" style="display: none; background: none; border: none; cursor: pointer; padding: 10px; margin-left: 20px;">
+            <div style="width: 30px; height: 30px; display: flex; flex-direction: column; justify-content: space-around;">
+                <div id="line1" style="height: 3px; background-color: #333; transition: all 0.3s ease;"></div>
+                <div id="line2" style="height: 3px; background-color: #333; transition: all 0.3s ease;"></div>
+                <div id="line3" style="height: 3px; background-color: #333; transition: all 0.3s ease;"></div>
+            </div>
+        </button>
+
+
+      <div class="Options" id="menuOptions" >
+        <img src="Media/Icons/Home.svg" alt="" class="Home_icon">
+        <a href="" class="Option" >الصفحة الرئيسية</a>
+        <a href="" class="Option">من نحن</a>
+        <a href="" class="Option">خدماتنا</a>
+        <a href="" class="Option">أسئلة شائعة</a>
+        <a href="" class="Option">إتصل بنا</a>
+        <a href="sign_in.html" class="sign_up"><button class="sign_up_button"> <div class="sign_up_button_content"> <p>تسجيل الدخول</p> <img class="sign_up_icon" src="Media/Icons/Sign_up.png" alt=""> </div> </button></a>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+// دالة لتحديد عرض الشاشة الحالي
+function checkScreenSize() {
+    const burgerButton = document.getElementById('burgerButton');
+    const menuOptions = document.getElementById('menuOptions');
+    
+    // إذا كان عرض الشاشة أقل من 768 بكسل، أظهر زر البرجر وأخفِ القائمة
+    if (window.innerWidth < 1000) {
+        burgerButton.style.display = 'block';
+        
+        // إخفاء القائمة في البداية على الأجهزة الصغيرة
+        if (!menuOptions.classList.contains('menu-active')) {
+            menuOptions.style.display = 'none';
+        }
+    } else {
+        // إذا كان عرض الشاشة كبيرًا، أخفِ زر البرجر وأظهر القائمة
+        burgerButton.style.display = 'none';
+        menuOptions.style.display = 'flex';
+        menuOptions.classList.remove('menu-active');
+        
+        // إعادة الشرطات إلى حالتها الأصلية
+        resetBurgerLines();
+    }
+}
+
+// دالة لتبديل حالة البرجر
+let isMenuOpen = false;
+
+function toggleBurgerMenu() {
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    const line3 = document.getElementById('line3');
+    const menuOptions = document.getElementById('menuOptions');
+    
+    if (!isMenuOpen) {
+        // تحويل إلى X
+        line1.style.transform = 'translateY(11px) rotate(45deg)';
+        line2.style.opacity = '0';
+        line3.style.transform = 'translateY(-11px) rotate(-45deg)';
+        
+        // إظهار القائمة
+        menuOptions.style.display = 'flex';
+        menuOptions.style.flexDirection = 'column';
+        menuOptions.style.position = 'absolute';
+        menuOptions.style.top = '60px';
+        menuOptions.style.right = '20px';
+        menuOptions.style.backgroundColor = '#fbfbfb';
+        menuOptions.style.padding = '15px';
+        menuOptions.style.borderRadius = '10px';
+        menuOptions.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+        menuOptions.style.zIndex = '1000';
+        menuOptions.style.width = '200px';
+        menuOptions.classList.add('menu-active');
+        
+        // تنسيق العناصر داخل القائمة المنسدلة
+        const options = menuOptions.querySelectorAll('.Option, .sign_up');
+        options.forEach(option => {
+            option.style.margin = '10px 0';
+            option.style.width = '100%';
+            option.style.textAlign = 'center';
+        });
+        
+        isMenuOpen = true;
+    } else {
+        // العودة إلى الشرطات الثلاثة
+        resetBurgerLines();
+        
+        // إخفاء القائمة
+        menuOptions.style.display = 'none';
+        menuOptions.classList.remove('menu-active');
+        
+        isMenuOpen = false;
+    }
+}
+
+// دالة لإعادة الشرطات إلى حالتها الأصلية
+function resetBurgerLines() {
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    const line3 = document.getElementById('line3');
+    
+    line1.style.transform = 'none';
+    line2.style.opacity = '1';
+    line3.style.transform = 'none';
+}
+
+// تهيئة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    const burgerButton = document.getElementById('burgerButton');
+    
+    // إضافة مستمع حدث للنقر على زر البرجر
+    burgerButton.addEventListener('click', toggleBurgerMenu);
+    
+    // التحقق من حجم الشاشة عند التحميل
+    checkScreenSize();
+    
+    // التحقق من حجم الشاشة عند تغيير حجم النافذة
+    window.addEventListener('resize', checkScreenSize);
+    
+    // إغلاق القائمة عند النقر خارجها
+    document.addEventListener('click', function(event) {
+        const burgerButton = document.getElementById('burgerButton');
+        const menuOptions = document.getElementById('menuOptions');
+        
+        if (isMenuOpen && 
+            !burgerButton.contains(event.target) && 
+            !menuOptions.contains(event.target)) {
+            toggleBurgerMenu();
+        }
+    });
+    
+    // إغلاق القائمة عند النقر على رابط داخل القائمة (للأجهزة الصغيرة)
+    const menuLinks = document.querySelectorAll('.Options a');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth < 768 && isMenuOpen) {
+                toggleBurgerMenu();
+            }
+        });
+    });
+});
+</script>
+
+  <div class="Main_Img"></div>
+
+  <center><h1 class="Why_3awn_Title" >ما هو عون؟</h1></center>
+
+  <div class="_3awn_About">
+    <div class="_3awn_About_img">
+      <img src="Media/Img_4.png" alt="" class="_3awn_About_img_img">
+    </div>
+    <div class="_3awn_About_text">
+      <h2>عون..</h2>
+      <p>منصّة تفاعليّة خُصِّصت لدعم كبار السن وذوي الهمم، وتهدف إلى تحسين حياتهم اليومية عبر تقديم حلول عملية وسهلة.</p>
+      <p>توفّر المنصّة محتوى يعرّف بالمشكلات والتحديات التي تواجههم، وترفع مستوى الوعي بشأن احتياجاتهم، إلى جانب خدمات مباشرة تُسهم في رعايتهم وحمايتهم.</p>
+      <br>
+      <p>وتقدّم المنصّة ميزات تساعد في خدمتهم بشكل فعلي، منها:</p>
+      <p>- تذكير منتظم بـ<span class="highlight" >مواعيد الأدوية.</span> </p>
+      <p>- <span class="highlight" >إرسال إشعارات فورية لذويهم أو المسؤول عنهم</span> عند حدوث أي طارئ أو تعرّض للأذى عبر الهاتف.</p>
+      <p>- <span class="highlight" >متابعة حالتهم اليومية</span> وتسهيل التواصل معهم.</p>
+      <p>وتسعى المنصّة إلى أن تكون عونًا حقيقيًّا لهم، وأداة يعتمد عليها أهلهم في الاطمئنان عليهم دائمًا</p>
+  </div>
+  </div>
+
+  <div class="_3awn_Provides">
+    <div class="_3awn_Provides_Ligne">
+      <div class="_3awn_Provides_Ligne_Title">
+        <h2>أبرز الخدمات</h2>
+        <div class="Line"></div>
+      </div>
+      <img src="Media/1.png" alt="" class="A_provide">
+      <img src="Media/2.png" alt="" class="A_provide">
+    </div>
+        <div class="_3awn_Provides_Ligne">
+      <img src="Media/3.png" alt="" class="A_provide">
+      <img src="Media/4.png" alt="" class="A_provide">
+      <img src="Media/5.png" alt="" class="A_provide">
+    </div>
+  </div>
+
+
+  <div class="_3awn_Questions_Title" style="direction: rtl;" >
+    <h2>أبرز الأسئلة</h2>
+    <div class="Line"></div>
+  </div>
+
+  <div class="Question_line">
+    <div class="Question">
+      <div class="TheQuestion">
+        <p>ما الهدف من عون؟</p>
+        <img src="Media/Icons/Question_mark.png" alt="" class="TheAnswer_Icon">
+      </div>
+      <div class="TheAnswer">
+        <p>إن عون هو أحدث أشكال إحترام وتوقير كبار السن وذوي الهمم عبر إستخدام واستغلال التكنلوجيات الحديثة في خدمتهم.</p>
+      </div>
+    </div>
+
+
+
+    <div class="Question">
+      <div class="TheQuestion">
+        <p>كيف أسجل في عون؟</p>
+        <img src="Media/Icons/Question_mark.png" alt="" class="TheAnswer_Icon">
+      </div>
+      <div class="TheAnswer">
+        <p>يتم التسجيل في تطبيق عون عن طريق حسابين: حساب للمسؤول (الأهل) وحساب لذوي الهمة أو كبير السن ويتم ربطهما بطريقة يسيرة.</p>
+      </div>
+      
+    </div>
+
+
+    <div class="Question">
+      <div class="TheQuestion">
+        <p>كيف ترون عون بعد سنوات؟</p>
+        <img src="Media/Icons/Question_mark.png" alt="" class="TheAnswer_Icon">
+      </div>
+      <div class="TheAnswer">
+        <p>نرى أن منصة عون قد أتت بفكرة مميزة لخدمة هتين الطبقتين المهمتين من المجتمع, لهذا نرى أن عون هو المستقبل الحتمي. </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="Footer">
+
+    <div class="EmailSection_And_WebTitle">
+    <div class="Email_Section">
+    <h3>:: الجريدة الإلكترونية ::</h3>
+    <form action="#">
+      <div class="Email">
+        <button class="Email_Button" type="email" >إشتراك</button>
+        <input type="email" placeholder="أدخل بريدك الإلكتروني هنا">
+    </div>
+    </form>
+    </div>
+
+    <div class="Web_Title">
+      <div class="WebTitle_3awn">
+        <h2 style="text-decoration: rtl;" >عون..</h2>
+        <div class="Line2"></div>
+      </div>
+      <h4>لأن عمرك كنز!</h4>
+    </div>
+
+    </div>
+
+    <br>
+    <hr>
+
+
+    <div class="Copyright">
+      <p>آخر تحديث: 2025/12/31</p>
+      <p>الحقوق لـعون ©2025</p>
+    </div>
+    
+  </div>
+
+
+
+</body>
+</html>

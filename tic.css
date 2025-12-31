@@ -1,0 +1,72 @@
+:root {
+    --bg: #1d1e22;
+}
+
+@font-face {
+    font-family: baseFont;
+    src: url(Media/الخط.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: baseFont;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg);
+    direction: rtl;
+    color: #1c5979;
+    background-color: #f7f7f7;
+}
+
+.container {
+    width: 100vw;
+    max-width: 600px;
+    background-color: black;
+    height: 400px;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    gap: 5px;
+}
+
+.item {
+    background: #f7f7f7;
+    cursor: pointer;
+}
+
+.playerX {
+    background-image: url("./Media/X_game.png");
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #f7f7f7;
+}
+
+.playerO {
+    background-image: url("./Media/O_game.png");
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #f7f7f7;
+}
+
+.playerTitle {
+    font-size: 50px;
+    margin-bottom: 30px;
+}
+
+.rematch {
+    display: none;
+    margin-bottom: 20px;
+    padding: 15px 40px;
+    background: black;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}

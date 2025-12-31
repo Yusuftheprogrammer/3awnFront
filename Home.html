@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="Media/Icon.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="button.css">
+  <link rel="stylesheet" href="Media.css">
+  <title>عون</title>
+  <script src="news.js"></script>
+</head>
+<body style="background-color: #f7f7f7; " >
+
+    <div class="Menu">
+    <div class="Menu_content">
+      <a href="index.html" style="width: 30%;" class="Option" ><img class="logo" alt="" src="Media/logo.png"></a>
+
+      <!-- زر البرجر الذي سيظهر على الأجهزة الصغيرة -->
+        <button id="burgerButton" style="display: none; background: none; border: none; cursor: pointer; padding: 10px; margin-left: 20px;">
+            <div style="width: 30px; height: 30px; display: flex; flex-direction: column; justify-content: space-around;">
+                <div id="line1" style="height: 3px; background-color: #333; transition: all 0.3s ease;"></div>
+                <div id="line2" style="height: 3px; background-color: #333; transition: all 0.3s ease;"></div>
+                <div id="line3" style="height: 3px; background-color: #333; transition: all 0.3s ease;"></div>
+            </div>
+        </button>
+
+      <div class="Options" id="menuOptions">
+        <img src="Media/Icons/Home.svg" alt="" class="Home_icon">
+        <a href="index.html" class="Option" >الصفحة الرئيسية</a>
+        <a href="index.html" class="Option">من نحن</a>
+        <a href="index.html" class="Option">خدماتنا</a>
+        <a href="index.html" class="Option">أسئلة شائعة</a>
+        <a href="index.html" class="Option">إتصل بنا</a>
+        <a href="#" id="logoutBtn" class="sign_up" style="display: none;"><button class="sign_up_button"> <div class="sign_up_button_content"> <p>تسجيل الخروج</p> <img class="sign_up_icon" src="Media/Icons/Sign_up.png" alt=""> </div> </button></a>
+        <a href="sign_in.html" class="sign_up" id="signInBtn"><button class="sign_up_button"> <div class="sign_up_button_content"> <p>فتح حسابي</p> <img class="sign_up_icon" src="Media/Icons/Sign_up.png" alt=""> </div> </button></a>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+function checkScreenSize() {
+    const burgerButton = document.getElementById('burgerButton');
+    const menuOptions = document.getElementById('menuOptions');
+    
+
+    if (window.innerWidth < 1000) {
+        burgerButton.style.display = 'block';
+        
+
+        if (!menuOptions.classList.contains('menu-active')) {
+            menuOptions.style.display = 'none';
+        }
+    } else {
+
+        burgerButton.style.display = 'none';
+        menuOptions.style.display = 'flex';
+        menuOptions.classList.remove('menu-active');
+        
+
+        resetBurgerLines();
+    }
+}
+
+
+let isMenuOpen = false;
+
+function toggleBurgerMenu() {
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    const line3 = document.getElementById('line3');
+    const menuOptions = document.getElementById('menuOptions');
+    
+    if (!isMenuOpen) {
+        line1.style.transform = 'translateY(11px) rotate(45deg)';
+        line2.style.opacity = '0';
+        line3.style.transform = 'translateY(-11px) rotate(-45deg)';
+        
+        menuOptions.style.display = 'flex';
+        menuOptions.style.flexDirection = 'column';
+        menuOptions.style.position = 'absolute';
+        menuOptions.style.top = '60px';
+        menuOptions.style.right = '20px';
+        menuOptions.style.backgroundColor = '#fbfbfb';
+        menuOptions.style.padding = '15px';
+        menuOptions.style.borderRadius = '10px';
+        menuOptions.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+        menuOptions.style.zIndex = '1000';
+        menuOptions.style.width = '200px';
+        menuOptions.classList.add('menu-active');
+        
+
+        const options = menuOptions.querySelectorAll('.Option, .sign_up');
+        options.forEach(option => {
+            option.style.margin = '10px 0';
+            option.style.width = '100%';
+            option.style.textAlign = 'center';
+        });
+        
+        isMenuOpen = true;
+    } else {
+
+        resetBurgerLines();
+        
+
+        menuOptions.style.display = 'none';
+        menuOptions.classList.remove('menu-active');
+        
+        isMenuOpen = false;
+    }
+}
+
+
+function resetBurgerLines() {
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    const line3 = document.getElementById('line3');
+    
+    line1.style.transform = 'none';
+    line2.style.opacity = '1';
+    line3.style.transform = 'none';
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const burgerButton = document.getElementById('burgerButton');
+    
+
+    burgerButton.addEventListener('click', toggleBurgerMenu);
+    
+
+    checkScreenSize();
+    
+
+    window.addEventListener('resize', checkScreenSize);
+    
+  
+    document.addEventListener('click', function(event) {
+        const burgerButton = document.getElementById('burgerButton');
+        const menuOptions = document.getElementById('menuOptions');
+        
+        if (isMenuOpen && 
+            !burgerButton.contains(event.target) && 
+            !menuOptions.contains(event.target)) {
+            toggleBurgerMenu();
+        }
+    });
+    
+
+    const menuLinks = document.querySelectorAll('.Options a');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth < 768 && isMenuOpen) {
+                toggleBurgerMenu();
+            }
+        });
+    });
+});
+</script>
+
+
+    <button class="warning-button" id="warningBtn">
+        <i class="fas fa-exclamation"></i>
+    </button>
+
+    <button class="warning-button" id="tableBtn" style="margin-top: 70px; background-color: #4CAF50; ">
+    <i class="fas fa-table"></i>
+    </button>
+    
+
+    <div class="alert-overlay" id="alertOverlay">
+        <div class="alert-box">
+            <div class="alert-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 class="alert-title">تحذير!</h2>
+            <p class="alert-message" id="alertMessage">بضغطك على (موافق) سيتم إرسال رسالة للمسؤول فحواها أنك قد تعرضت للخطر وبحاجة لمساعدة الآن.</p>
+            <div class="alert-actions">
+                <button class="alert-button confirm-btn" id="confirmBtn">أرسل</button>
+                <button class="alert-button cancel-btn" id="cancelBtn">تراجع</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- بعد popup التحذير مباشرة -->
+<!-- بعد popup التحذير مباشرة -->
+    <div class="alert-overlay" id="tableOverlay">
+        <div class="alert-box" style="max-width: 800px;">
+            <div class="alert-icon" style="background: #14415a;">
+                <i class="fas fa-table"></i>
+            </div>
+            <h2 class="alert-title">جدول الدواء</h2>
+            
+            <!-- الجدول فقط -->
+            <div class="table-container" style="max-height: 400px; overflow-y: auto; margin: 20px 0;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #14415a; color: white;">
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: right;">اسم الدواء</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: right;">النوع</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: right;">الوقت</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasksTableBody">
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">زرزور الفيران</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">فار (حبة)</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">بعد فطور الصباح</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">مضاجع الجراثيم</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">عنتيل (سائل)</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">بعد وجبة الفطور</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">مُطَلِّق الأمراض ثلاثًا</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">بوتيته (حبة)</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">بعد وجبة العشاء</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="alert-actions">
+                <button class="alert-button" id="createMed">اضافة دواء</button>
+                <button class="alert-button cancel-btn" id="closeTableBtn">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const warningBtn = document.getElementById('warningBtn');
+        const alertOverlay = document.getElementById('alertOverlay');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const createdMed = document.getElementById("createMed");
+        const alertMessage = document.getElementById('alertMessage');
+        let activeChatRequestId = null;
+
+      
+
+        warningBtn.addEventListener('click', function() {
+            alertOverlay.classList.add('active');
+        });
+
+        createdMed.addEventListener('click', () => {
+            alertOverlay.classList.add('active');
+            addMedicine();
+        })
+        
+        // إرسال التحذير
+        confirmBtn.addEventListener('click', async function() {
+            try {
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = 'جاري الإرسال...';
+                
+                // Get user info
+                const userInfo = window.API.getUserInfo();
+                if (!userInfo) {
+                    throw new Error('يجب تسجيل الدخول أولاً');
+                }
+                
+                // Get linked responsible person
+                let responsibleId = null;
+                
+                if (userInfo.role === 'oldman' || userInfo.role === 'disabled') {
+                    // For oldman/disabled, get their linked responsible
+                    try {
+                        const responsibleResponse = await window.API.account.getResponsibleAccount();
+                        if (responsibleResponse.responsible && responsibleResponse.responsible.id) {
+                            responsibleId = responsibleResponse.responsible.id;
+                        }
+                    } catch (error) {
+                        console.error('Error getting responsible account:', error);
+                        // Fallback: try conversations
+                        const conversations = await window.API.chat.getConversations();
+                        if (conversations.conversations && conversations.conversations.length > 0) {
+                            const responsibleConv = conversations.conversations.find(c => c.accountType === 'responsible');
+                            if (responsibleConv) {
+                                responsibleId = responsibleConv.userId;
+                            }
+                        }
+                    }
+                } else {
+                    // If user is responsible, we can't send warning to themselves
+                    showNotification('هذا الزر مخصص لكبار السن وذوي الهمم فقط', 'error');
+                    alertOverlay.classList.remove('active');
+                    confirmBtn.disabled = false;
+                    confirmBtn.textContent = 'أرسل';
+                    return;
+                }
+                
+                if (!responsibleId) {
+                    throw new Error('لا يوجد مسؤول مربوط بحسابك');
+                }
+                
+                // Send emergency message via chat
+                const emergencyMessage = `🚨 تحذير عاجل: ${userInfo.name} يحتاج إلى مساعدة فورية!`;
+                await window.API.chat.sendMessage(responsibleId, emergencyMessage);
+                
+                // Show notification
+                showNotification('تم إرسال التحذير بنجاح', 'success');
+                
+                // Close overlay
+                alertOverlay.classList.remove('active');
+                
+                // Request browser notification permission and show notification
+                if ('Notification' in window) {
+                    if (Notification.permission === 'granted') {
+                        new Notification('تم إرسال التحذير', {
+                            body: 'تم إرسال رسالة التحذير للمسؤول',
+                            icon: 'Media/Icon.png',
+                            badge: 'Media/Icon.png'
+                        });
+                    } else if (Notification.permission !== 'denied') {
+                        Notification.requestPermission().then(permission => {
+                            if (permission === 'granted') {
+                                new Notification('تم إرسال التحذير', {
+                                    body: 'تم إرسال رسالة التحذير للمسؤول',
+                                    icon: 'Media/Icon.png',
+                                    badge: 'Media/Icon.png'
+                                });
+                            }
+                        });
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error sending warning:', error);
+                showNotification(error.message || 'حدث خطأ في إرسال التحذير', 'error');
+            } finally {
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = 'أرسل';
+            }
+        });
+        
+
+        cancelBtn.addEventListener('click', function() {
+            alertOverlay.classList.remove('active');
+        });
+        
+
+        alertOverlay.addEventListener('click', function(e) {
+            if (e.target === alertOverlay) {
+                alertOverlay.classList.remove('active');
+            }
+        });
+        
+
+
+
+
+
+    const tableBtn = document.getElementById('tableBtn');
+    const tableOverlay = document.getElementById('tableOverlay');
+    const closeTableBtn = document.getElementById('closeTableBtn');
+    const tasksTableBody = document.getElementById('tasksTableBody');
+    
+    // Load medicines when table button is clicked
+    tableBtn.addEventListener('click', async function() {
+        tableOverlay.classList.add('active');
+        await loadMedicines();
+    });
+    
+
+    async function addMedicine() {
+    try {
+        const name = prompt("ادخل اسم الدواء:");
+        if (!name) return alert("يجب إدخال اسم الدواء");
+
+        const dosage = prompt("ادخل النوع/الجرعة:");
+        if (!dosage) return alert("يجب إدخال النوع/الجرعة");
+
+        const frequency = prompt("ادخل التكرار (مثلاً: يوميًا):");
+        if (!frequency) return alert("يجب إدخال التكرار");
+
+        const time = prompt("ادخل الوقت (افصل بين الأوقات بفاصلة)").split(",");
+        if (!time || time.length === 0) return alert("يجب إدخال الوقت");
+
+        const startDate = prompt("ادخل تاريخ البداية (yyyy-mm-dd):");
+        if (!startDate) return alert("يجب إدخال تاريخ البداية");
+
+        const endDate = prompt("ادخل تاريخ النهاية (اختياري):") || null;
+        const notes = prompt("ادخل ملاحظات (اختياري):") || "";
+
+        // إرسال البيانات للـBackend
+        const response = await window.API.medicine.createMedicine({
+            name,
+            dosage,
+            frequency,
+            time,
+            startDate,
+            endDate,
+            notes
+        });
+
+        if (response.success) {
+            alert("تم إضافة الدواء بنجاح");
+            loadMedicines(); // إعادة تحميل الجدول بعد الإضافة
+        } else {
+            alert("حدث خطأ: " + response.message);
+        }
+    } catch (error) {
+        console.error("Error adding medicine:", error);
+        alert("حدث خطأ أثناء إضافة الدواء");
+    }
+}
+
+
+    // Load medicines from backend
+    async function loadMedicines() {
+        try {
+            tasksTableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px;">جاري التحميل...</td></tr>';
+            
+            const response = await window.API.medicine.getAllMedicines();
+            
+            if (response.medicines && response.medicines.length > 0) {
+                tasksTableBody.innerHTML = response.medicines
+                    .filter(med => med.isActive) // Only show active medicines
+                    .map(medicine => {
+                        const times = Array.isArray(medicine.time) ? medicine.time.join(', ') : medicine.time;
+                        return `
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">${medicine.name}</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">${medicine.dosage}</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">${times}</td>
+                            </tr>
+                        `;
+                    }).join('');
+                
+                if (response.medicines.filter(med => med.isActive).length === 0) {
+                    tasksTableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px; color: #999;">لا توجد أدوية نشطة</td></tr>';
+                }
+            } else {
+                tasksTableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px; color: #999;">لا توجد أدوية مسجلة</td></tr>';
+            }
+        } catch (error) {
+            console.error('Error loading medicines:', error);
+            tasksTableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px; color: red;">حدث خطأ في تحميل الأدوية</td></tr>';
+        }
+    }
+    
+    // إغلاق جدول المهام
+    closeTableBtn.addEventListener('click', function() {
+        tableOverlay.classList.remove('active');
+    });
+    
+    // إغلاق عند النقر خارج الصندوق
+    tableOverlay.addEventListener('click', function(e) {
+        if (e.target === tableOverlay) {
+            tableOverlay.classList.remove('active');
+        }
+    });
+            document.head.appendChild(style);
+
+    </script>
+
+  <div class="Welcoming_full">
+      <div class="Welcoming">
+    <h2 id="welcomeName">مرحبًا!</h2>
+    <h4>لا تنسى <span style="color: #d99b0e;" >كوب شرابك</span> المفضل.</h4>
+  </div>
+  <img src="Media/Your_Drink.png" alt="" class="Welcoming_img" >
+  </div>
+
+  <div class="games_section" style="direction: ltr;" >
+    <div class="gamesSection_title">
+      <h1>قسم الأنشطة</h1>
+      <h2>يمكنك استغلال وقت فراغك للقيام بأنشطة منشطة للذهن مثل الشطرنج, السودوكو، وعدة ألعاب وأنشطة أخرى</h2>
+      <h2>مهما إمتلك الإنسان مشاغل، فعليه أن يحظى ب<span class="highlight" >قسط من الراحة</span></h2>
+    </div>
+    <div class="gamesSection_Content">
+      <div class="games">
+        <a href="./memory.html">
+          <div class="a_game">
+          <img src="Media/Icons/Chess_game.png" alt="" class="aGame_icon">
+          <h1 class="aGame_Name" >بطاقات الذاكرة</h1>
+          <p>تعتبر بطاقات الذاكرة لعبة المفكرين!</p>
+          </div>
+        </a>
+        
+        <a href="./sudoku.html">
+          <div class="a_game">
+          <img src="Media/Icons/Sudoku_game.png" alt="" class="aGame_icon">
+          <h1 class="aGame_Name" >سودوكو</h1>
+          <p>تعتبر السودوكو لعبة العلماء!</p>
+          </div>
+        </a>
+
+        <a href="./tic.html">
+          <div class="a_game">
+          <img src="Media/Icons/XO_game.png" alt="" class="aGame_icon">
+          <h1 class="aGame_Name" >إكس، أو</h1>
+          <p>تعتبر إكس، أو لعبة الشباب والتحدي!</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <center class="NewsSection_title" >
+  
+
+  <div class="news_section" id="newsSection">
+    <!-- News will be loaded here -->
+  </div>
+
+  <!-- Account Linking Section (for responsible users only) -->
+  <div id="accountLinkingSection">
+    <h2>ربط الحسابات</h2>
+    
+    <!-- Link New Account -->
+    <div class="accountLinkingSection_search">
+      <h3>ربط حساب جديد</h3>
+      <div class="search">
+        <input type="email" id="searchEmail" placeholder="البريد الإلكتروني للحساب المراد ربطه">
+        <select id="searchAccountType">
+          <option value="oldman">كبير سن</option>
+          <option value="disabled">ذو همة</option>
+        </select>
+        <button id="searchAccountBtn">بحث</button>
+      </div>
+      <div id="searchResult" style="margin-top: 15px;"></div>
+    </div>
+
+    <!-- Linked Accounts List -->
+    <div class="Linked_Accounts">
+      <h3>الحسابات المربوطة</h3>
+      <div id="linkedAccountsList">
+        <p>جاري التحميل...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Section -->
+  <div id="ChatSection">
+    <h2 class="ChatSection_Title">الدردشة الخاصة</h2>
+    
+    <!-- Conversations List -->
+    <div id="conversationsList" style="margin-bottom: 20px;">
+      <h3 class="conversationsList_Title">المحادثات:</h3>
+      <div id="conversationsContainer">
+        <p>جاري تحميل المحادثات...</p>
+      </div>
+    </div>
+    
+    <!-- Current Chat -->
+    <div id="currentChatInfo">
+      <p style="color: #14415a; font-weight: bold;">الدردشة مع: <span id="currentChatUserName" class="highlight" ></span></p>
+    </div>
+    
+    <div id="chatContainer" style="height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 10px; padding: 10px; margin-bottom: 10px; background: #f9f9f9;">
+      <div style="text-align: center; padding: 20px;">
+        <p id="chatPlaceholder">اختر محادثة للبدء</p>
+      </div>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 10px; direction: rtl;" disabled>
+      <button id="sendBtn" style="padding: 10px 20px; background: #d99b0e; color: white; border: none; border-radius: 10px; cursor: pointer;" disabled>إرسال</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="api.js"></script>
+  <script>
+    // Notification system - defined early so it's available everywhere
+    function showNotification(message, type = 'info') {
+        // Remove existing notification if any
+        const existingNotification = document.getElementById('customNotification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.id = 'customNotification';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#2ecc71' : type === 'error' ? '#e74c3c' : '#3498db'};
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 10000;
+            font-size: 16px;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+            max-width: 400px;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }, 5000);
+    }
+    
+    // Add notification animations
+    if (!document.getElementById('notificationStyles')) {
+        const notificationStyle = document.createElement('style');
+        notificationStyle.id = 'notificationStyles';
+        notificationStyle.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(notificationStyle);
+    }
+    
+    // Chat variables - must be defined before use
+    let currentChatUserId = null;
+    let socket = null;
+    let typingTimeout = null;
+
+    // Initialize Socket.IO
+    function initSocket() {
+      const token = window.API.getAuthToken();
+      if (!token) {
+        console.log('No token available for Socket.IO');
+        return;
+      }
+
+      // Get API base URL
+      const API_BASE_URL = 'http://localhost:5000'; // Change this to your backend URL
+      
+      socket = io(API_BASE_URL, {
+        auth: {
+          token: token
+        },
+        transports: ['websocket', 'polling']
+      });
+
+      socket.on('connect', () => {
+        console.log('Connected to Socket.IO server');
+      });
+
+      socket.on('disconnect', () => {
+        console.log('Disconnected from Socket.IO server');
+      });
+
+      socket.on('connect_error', (error) => {
+        console.error('Socket.IO connection error:', error);
+      });
+
+      // Handle new message received
+      socket.on('new_message', (data) => {
+        const chat = data.chat;
+        
+        // If this message is for the current chat, add it
+        const isCurrentChat =
+          String(chat.senderId) === String(currentChatUserId) ||
+          String(chat.receiverId) === String(currentChatUserId);
+
+        if (isCurrentChat) {
+          addMessageToChat(chat);
+        }
+
+        
+        // Refresh conversations list to update unread count
+        loadConversations();
+      });
+
+      // Handle message sent confirmation
+      socket.on('message_sent', (data) => {
+        if (data.chat && data.chat._id) {
+          // Replace optimistic message with real one
+          const tempMsg = document.querySelector(`[id^="temp-"]`);
+          if (tempMsg) {
+            const realMessage = data.chat;
+            tempMsg.id = realMessage._id;
+            tempMsg.innerHTML = `
+              <div style="display: inline-block; max-width: 70%; padding: 10px; border-radius: 10px; background: #d99b0e; color: white;">
+                <strong>${realMessage.senderName}:</strong> ${realMessage.message}
+                <div style="font-size: 10px; margin-top: 5px; opacity: 0.7;">${new Date(realMessage.createdAt).toLocaleTimeString('ar-SA')}</div>
+              </div>
+            `;
+            tempMsg.style.opacity = '1';
+          }
+        }
+      });
+
+      // Handle conversation updated
+      socket.on('conversation_updated', () => {
+        loadConversations();
+      });
+
+      // Handle typing indicators
+      socket.on('user_typing', (data) => {
+        if (currentChatUserId === data.userId) {
+          showTypingIndicator(data.userName);
+        }
+      });
+
+      socket.on('user_stop_typing', (data) => {
+        if (currentChatUserId === data.userId) {
+          hideTypingIndicator();
+        }
+      });
+
+      socket.on('error', (data) => {
+        alert('خطأ: ' + data.message);
+      });
+    }
+
+    // Add message to chat UI
+    function addMessageToChat(msg) {
+      const chatContainer = document.getElementById('chatContainer');
+      if (!chatContainer) return;
+      
+      // Check if message already exists
+      if (msg._id && document.getElementById(msg._id)) return;
+      
+      const isMyMessage = msg.senderId && msg.senderId.toString() === userInfo.id.toString();
+      
+      const messageDiv = document.createElement('div');
+      messageDiv.id = msg._id || 'msg-' + Date.now();
+      messageDiv.style.cssText = `margin-bottom: 10px; ${isMyMessage ? 'text-align: left;' : 'text-align: right;'}`;
+      messageDiv.innerHTML = `
+        <div style="display: inline-block; max-width: 70%; padding: 10px; border-radius: 10px; background: ${isMyMessage ? '#d99b0e' : '#e0e0e0'}; color: ${isMyMessage ? 'white' : 'black'};">
+          <strong>${msg.senderName || 'مستخدم'}:</strong> ${msg.message}
+          <div style="font-size: 10px; margin-top: 5px; opacity: 0.7;">${msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString('ar-SA') : new Date().toLocaleTimeString('ar-SA')}</div>
+        </div>
+      `;
+      chatContainer.appendChild(messageDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // Show typing indicator
+    function showTypingIndicator(userName) {
+      let typingIndicator = document.getElementById('typingIndicator');
+      if (!typingIndicator) {
+        const chatContainer = document.getElementById('chatContainer');
+        typingIndicator = document.createElement('div');
+        typingIndicator.id = 'typingIndicator';
+        typingIndicator.style.cssText = 'margin-bottom: 10px; text-align: right;';
+        typingIndicator.innerHTML = `
+          <div style="display: inline-block; padding: 10px; border-radius: 10px; background: #e0e0e0;">
+            <em style="color: #666;">${userName} يكتب...</em>
+          </div>
+        `;
+        chatContainer.appendChild(typingIndicator);
+      }
+    }
+
+    // Hide typing indicator
+    function hideTypingIndicator() {
+      const typingIndicator = document.getElementById('typingIndicator');
+      if (typingIndicator) {
+        typingIndicator.remove();
+      }
+    }
+
+    // Check authentication
+    const userInfo = window.API.getUserInfo();
+    const token = window.API.getAuthToken();
+    
+    if (userInfo && token) {
+      document.getElementById('welcomeName').textContent = `مرحبًا، يا ${userInfo.name}!`;
+      document.getElementById('logoutBtn').style.display = 'block';
+      document.getElementById('signInBtn').style.display = 'none';
+      
+      // Show account linking section for responsible users
+      if (userInfo.role === 'responsible') {
+        document.getElementById('accountLinkingSection').style.display = 'block';
+        loadLinkedAccounts();
+      }
+      
+      // Initialize Socket.IO connection
+      initSocket();
+    } else {
+      // Redirect to sign in if not authenticated
+      window.location.href = 'sign_in.html';
+    }
+
+    // Account Linking Functions
+    async function loadLinkedAccounts() {
+      try {
+        const response = await window.API.account.getLinkedAccounts();
+        const linkedAccountsList = document.getElementById('linkedAccountsList');
+        
+        if (response.linkedAccounts && response.linkedAccounts.length > 0) {
+          linkedAccountsList.innerHTML = response.linkedAccounts.map(account => `
+            <div class="a_linkedAccount">
+              <div>
+                <strong class="a_linkedAccount_name">${account.name}</strong>
+                <p class="a_linkedAccount_email">${account.email}</p>
+                <span class="a_linkedAccount_type">
+                  ${account.type === 'oldman' ? 'كبير سن' : 'ذو همة'}
+                </span>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          linkedAccountsList.innerHTML = '<p style="text-align: center; color: #999;">لا توجد حسابات مربوطة</p>';
+        }
+      } catch (error) {
+        console.error('Error loading linked accounts:', error);
+        document.getElementById('linkedAccountsList').innerHTML = '<p style="text-align: center; color: red;">حدث خطأ في تحميل الحسابات المربوطة</p>';
+      }
+    }
+
+    // Search and link account
+    document.getElementById('searchAccountBtn').addEventListener('click', async () => {
+      const email = document.getElementById('searchEmail').value.trim();
+      const accountType = document.getElementById('searchAccountType').value;
+      const searchResult = document.getElementById('searchResult');
+      const searchBtn = document.getElementById('searchAccountBtn');
+      
+      if (!email) {
+        searchResult.innerHTML = '<p style="color: red;">يرجى إدخال البريد الإلكتروني</p>';
+        return;
+      }
+      
+      searchBtn.disabled = true;
+      searchBtn.textContent = 'جاري البحث...';
+      searchResult.innerHTML = '<p style="text-align: center;">جاري البحث...</p>';
+      
+      try {
+        const response = await window.API.account.searchAccount(email, accountType);
+        
+        if (response.account) {
+          const account = response.account;
+          
+          if (account.isLinked) {
+            searchResult.innerHTML = `
+              <div style="background: #fff3cd; padding: 15px; border-radius: 10px; border: 1px solid #ffc107;">
+                <p style="color: #856404; margin-bottom: 10px;"><strong>${account.name}</strong> - ${account.email}</p>
+                <p style="color: #856404;">هذا الحساب مربوط بالفعل بحسابك</p>
+              </div>
+            `;
+          } else if (account.linkedToOther) {
+            searchResult.innerHTML = `
+              <div style="background: #f8d7da; padding: 15px; border-radius: 10px; border: 1px solid #dc3545;">
+                <p style="color: #721c24; margin-bottom: 10px;"><strong>${account.name}</strong> - ${account.email}</p>
+                <p style="color: #721c24;">هذا الحساب مربوط بحساب مسؤول آخر</p>
+              </div>
+            `;
+          } else {
+            searchResult.innerHTML = `
+              <div class="a_result">
+                <p class="result_name"><strong class="highlight" >${account.name}</strong> - ${account.email}</p>
+                <p class= "result_type">نوع الحساب: <strong class="highlight" > ${accountType === 'oldman' ? 'كبير سن' : 'ذو همة'} </strong></p>
+                <p class="askingForPassword">أدخل كلمة سر الحساب للتحقق:</p>
+                <input type="password" id="linkPassword" placeholder="كلمة السر">
+                <button id="linkAccountBtn" data-account-id="${account.id}" data-account-type="${account.type}">
+                  ربط الحساب
+                </button>
+              </div>
+            `;
+            
+            // Add event listener to link button
+            document.getElementById('linkAccountBtn').addEventListener('click', async () => {
+              const linkBtn = document.getElementById('linkAccountBtn');
+              const accountId = linkBtn.getAttribute('data-account-id');
+              const accountType = linkBtn.getAttribute('data-account-type');
+              const password = document.getElementById('linkPassword').value;
+              
+              if (!password) {
+                alert('يرجى إدخال كلمة السر');
+                return;
+              }
+              
+              linkBtn.disabled = true;
+              linkBtn.textContent = 'جاري الربط...';
+              
+              try {
+                const linkResponse = await window.API.account.linkAccount(accountId, accountType, password);
+                searchResult.innerHTML = `
+                  <div style="background: #d4edda; padding: 15px; border-radius: 10px; border: 1px solid #28a745;">
+                    <p style="color: #155724;">${linkResponse.message}</p>
+                  </div>
+                `;
+                
+                // Clear search field and reload linked accounts
+                document.getElementById('searchEmail').value = '';
+                loadLinkedAccounts();
+                // Reload conversations for chat
+                if (typeof loadConversations === 'function') {
+                  loadConversations();
+                }
+              } catch (error) {
+                searchResult.innerHTML = `
+                  <div style="background: #f8d7da; padding: 15px; border-radius: 10px; border: 1px solid #dc3545;">
+                    <p style="color: #721c24;">حدث خطأ: ${error.message}</p>
+                  </div>
+                `;
+                linkBtn.disabled = false;
+                linkBtn.textContent = 'ربط الحساب';
+              }
+            });
+          }
+        }
+      } catch (error) {
+        searchResult.innerHTML = `
+          <div style="background: #f8d7da; padding: 15px; border-radius: 10px; border: 1px solid #dc3545;">
+            <p style="color: #721c24;">${error.message || 'حدث خطأ في البحث'}</p>
+          </div>
+        `;
+      } finally {
+        searchBtn.disabled = false;
+        searchBtn.textContent = 'بحث';
+      }
+    });
+
+    // Allow Enter key to search
+    document.getElementById('searchEmail').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('searchAccountBtn').click();
+      }
+    });
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.API.clearAuthData();
+      window.location.href = 'sign_in.html';
+    });
+
+    // Load news
+    async function loadNews() {
+      try {
+        const response = await window.API.news.getAllNews(1, 10);
+        const newsContainer = document.getElementById('newsContainer');
+        const newsSection = document.getElementById('newsSection');
+        
+        if (response.news && response.news.length > 0) {
+          // Update news container
+          newsContainer.innerHTML = response.news.slice(0, 3).map((item, index) => 
+            `<div class="New ${index === 0 ? 'One' : index === 1 ? 'Two' : 'Three'}">
+              <h4>${item.title}</h4>
+            </div>`
+          ).join('');
+          
+          // Update news section
+          newsSection.innerHTML = response.news.map(item => `
+            <div class="news" style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 10px;">
+              <h3 style="color: #14415a; margin-bottom: 10px;">${item.title}</h3>
+              <p style="color: #666; line-height: 1.6;">${item.content.substring(0, 200)}...</p>
+              <p style="color: #999; font-size: 12px; margin-top: 10px;">${item.author} - ${new Date(item.createdAt).toLocaleDateString('ar-SA')}</p>
+            </div>
+          `).join('');
+        } else {
+          newsContainer.innerHTML = '<div style="text-align: center; padding: 20px;"><p>لا توجد أخبار متاحة</p></div>';
+        }
+      } catch (error) {
+        console.error('Error loading news:', error);
+        document.getElementById('newsContainer').innerHTML = '<div style="text-align: center; padding: 20px;"><p>حدث خطأ في تحميل الأخبار</p></div>';
+      }
+    }
+
+
+    // Load conversations list
+    async function loadConversations() {
+      try {
+        const response = await window.API.chat.getConversations();
+        const conversationsContainer = document.getElementById('conversationsContainer');
+        
+        if (response.conversations && response.conversations.length > 0) {
+          conversationsContainer.innerHTML = response.conversations.map(conv => `
+            <div style="padding: 10px; margin-bottom: 5px; background: white; border-radius: 5px; cursor: pointer; border: 1px solid #ddd; ${currentChatUserId === conv.userId ? 'border-color: #d99b0e;' : ''}" 
+                 onclick="selectConversation('${conv.userId}', '${conv.userName}')">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <strong style="color: #14415a;">${conv.userName}</strong>
+                  ${conv.unreadCount > 0 ? `<span style="background: red; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-right: 10px;">${conv.unreadCount}</span>` : ''}
+                </div>
+                ${conv.lastMessage ? `<span style="font-size: 12px; color: #999;">${conv.lastMessage.message.substring(0, 30)}...</span>` : ''}
+              </div>
+            </div>
+          `).join('');
+        } else {
+          conversationsContainer.innerHTML = '<p style="text-align: center; color: #999;">لا توجد محادثات بعد. قم بربط حساب للبدء.</p>';
+        }
+      } catch (error) {
+        console.error('Error loading conversations:', error);
+        conversationsContainer.innerHTML = '<p style="text-align: center; color: red;">حدث خطأ في تحميل المحادثات</p>';
+      }
+    }
+
+    // Select conversation
+    window.selectConversation = function(userId, userName) {
+      currentChatUserId = userId;
+
+      const chatContainer = document.getElementById('chatContainer');
+      chatContainer.innerHTML = ''; // 🔥 مهم جدًا
+
+      document.getElementById('currentChatInfo').style.display = 'block';
+      document.getElementById('currentChatUserName').textContent = userName;
+      document.getElementById('messageInput').disabled = false;
+      document.getElementById('sendBtn').disabled = false;
+
+      loadChatMessages(userId);
+    };
+
+
+    // Load chat messages for specific user
+    async function loadChatMessages(userId) {
+      if (!userId) return;
+
+      const requestId = Date.now(); 
+      activeChatRequestId = requestId;
+
+      const chatContainer = document.getElementById('chatContainer');
+      chatContainer.innerHTML = '<p style="text-align:center">جاري التحميل...</p>';
+
+      try {
+        const response = await window.API.chat.getMessages(userId);
+
+        if (activeChatRequestId !== requestId) return;
+
+        if (response.messages && response.messages.length > 0) {
+          chatContainer.innerHTML = response.messages.map(msg => {
+            const isMyMessage = String(msg.senderId) === String(userInfo.id);
+            return `
+              <div style="margin-bottom: 10px; ${isMyMessage ? 'text-align:left;' : 'text-align:right;'}">
+                <div style="display:inline-block; max-width:70%; padding:10px; border-radius:10px;
+                  background:${isMyMessage ? '#d99b0e' : '#e0e0e0'};
+                  color:${isMyMessage ? 'white' : 'black'};">
+                  <strong>${msg.senderName}:</strong> ${msg.message}
+                  <div style="font-size:10px; opacity:0.7;">
+                    ${new Date(msg.createdAt).toLocaleTimeString('ar-SA')}
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          chatContainer.innerHTML = '<p style="text-align:center">لا توجد رسائل</p>';
+        }
+
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      } catch (error) {
+        if (activeChatRequestId !== requestId) return;
+        chatContainer.innerHTML = '<p style="text-align:center;color:red">خطأ في تحميل الرسائل</p>';
+      }
+    }
+
+    // Send message with optimistic update via Socket.IO
+    document.getElementById('sendBtn').addEventListener('click', async () => {
+      if (!currentChatUserId) {
+        alert('يرجى اختيار محادثة أولاً');
+        return;
+      }
+      
+      if (!socket || !socket.connected) {
+        alert('غير متصل بالخادم. يرجى المحاولة مرة أخرى.');
+        return;
+      }
+      
+      const messageInput = document.getElementById('messageInput');
+      const message = messageInput.value.trim();
+      
+      if (!message) return;
+      
+      const chatContainer = document.getElementById('chatContainer');
+      const sendBtn = document.getElementById('sendBtn');
+      
+      // Optimistic update - add message immediately
+      const tempMessageId = 'temp-' + Date.now();
+      const messageDiv = document.createElement('div');
+      messageDiv.id = tempMessageId;
+      messageDiv.style.cssText = 'margin-bottom: 10px; text-align: left;';
+      messageDiv.innerHTML = `
+        <div style="display: inline-block; max-width: 70%; padding: 10px; border-radius: 10px; background: #d99b0e; color: white; opacity: 0.7;">
+          <strong>${userInfo.name}:</strong> ${message}
+          <div style="font-size: 10px; margin-top: 5px; opacity: 0.7;">جاري الإرسال...</div>
+        </div>
+      `;
+      chatContainer.appendChild(messageDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      
+      // Clear input and disable button
+      const messageText = message;
+      messageInput.value = '';
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'جاري الإرسال...';
+      
+      // Send via Socket.IO
+      socket.emit('send_message', {
+        receiverId: currentChatUserId,
+        message: messageText
+      });
+      
+      // Re-enable button after a short delay (message_sent event will handle confirmation)
+      setTimeout(() => {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'إرسال';
+      }, 1000);
+    });
+
+    // Typing indicator
+    let typingTimer = null;
+    document.getElementById('messageInput').addEventListener('input', () => {
+      if (!socket || !socket.connected || !currentChatUserId) return;
+      
+      // Emit typing
+      socket.emit('typing', { receiverId: currentChatUserId });
+      
+      // Clear previous timer
+      if (typingTimer) {
+        clearTimeout(typingTimer);
+      }
+      
+      // Stop typing after 2 seconds of no input
+      typingTimer = setTimeout(() => {
+        socket.emit('stop_typing', { receiverId: currentChatUserId });
+      }, 2000);
+    });
+
+    // Allow Enter key to send message
+    document.getElementById('messageInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('sendBtn').click();
+      }
+    });
+
+    // Request browser notification permission on page load
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+    
+    // Medicine reminder notifications
+    async function checkMedicineReminders() {
+        try {
+            const response = await window.API.medicine.getAllMedicines();
+            if (!response.medicines) return;
+            
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes(); // Time in minutes
+            
+            response.medicines
+                .filter(med => med.isActive)
+                .forEach(medicine => {
+                    if (!Array.isArray(medicine.time)) return;
+                    
+                    medicine.time.forEach(timeStr => {
+                        // Parse time string (format: "HH:MM" or "08:00")
+                        const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})/);
+                        if (!timeMatch) return;
+                        
+                        const hour = parseInt(timeMatch[1]);
+                        const minute = parseInt(timeMatch[2]);
+                        const medicineTime = hour * 60 + minute;
+                        
+                        // Check if it's time for medicine (within 5 minutes)
+                        const timeDiff = Math.abs(currentTime - medicineTime);
+                        if (timeDiff <= 5) {
+                            // Check if we already notified for this medicine today
+                            const notificationKey = `medicine_${medicine._id}_${now.toDateString()}_${timeStr}`;
+                            if (!localStorage.getItem(notificationKey)) {
+                                // Show browser notification
+                                if ('Notification' in window && Notification.permission === 'granted') {
+                                    new Notification(`⏰ تذكير: وقت الدواء`, {
+                                        body: `حان وقت تناول ${medicine.name} (${medicine.dosage})`,
+                                        icon: 'Media/Icon.png',
+                                        badge: 'Media/Icon.png',
+                                        tag: notificationKey
+                                    });
+                                }
+                                
+                                // Show in-page notification
+                                showNotification(`⏰ تذكير: حان وقت تناول ${medicine.name}`, 'info');
+                                
+                                // Mark as notified
+                                localStorage.setItem(notificationKey, 'true');
+                                
+                                // Clear after 24 hours
+                                setTimeout(() => {
+                                    localStorage.removeItem(notificationKey);
+                                }, 24 * 60 * 60 * 1000);
+                            }
+                        }
+                    });
+                });
+        } catch (error) {
+            console.error('Error checking medicine reminders:', error);
+        }
+    }
+    
+    // Check medicine reminders every minute
+    setInterval(checkMedicineReminders, 60000);
+    // Also check immediately on load
+    setTimeout(checkMedicineReminders, 2000);
+    
+    // Load initial data
+    loadNews();
+    loadConversations();
+  </script>
+
+
+
+  <div class="Footer" style=" direction: ltr;" >
+
+    <div class="EmailSection_And_WebTitle">
+    <div class="Email_Section">
+    <h3>:: الجريدة الإلكترونية ::</h3>
+    <form action="#">
+      <div class="Email">
+        <button class="Email_Button" type="email" >إشتراك</button>
+        <input type="email" placeholder="أدخل بريدك الإلكتروني هنا">
+    </div>
+    </form>
+    </div>
+
+    <div class="Web_Title">
+      <div class="WebTitle_3awn">
+        <h2 style="text-decoration: rtl;" >عون..</h2>
+        <div class="Line2"></div>
+      </div>
+      <h4>لأن عمرك كنز!</h4>
+    </div>
+
+    </div>
+
+    <br>
+    <hr>
+
+
+    <div class="Copyright">
+      <p>آخر تحديث: 2025/12/31</p>
+      <p>الحقوق لـعون ©2025</p>
+    </div>
+    
+  </div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="Media/Icon.png">
+  <link rel="stylesheet" href="Media.css">
+  <link rel="stylesheet" href="style.css">
+  <title>عون - إنشاء حساب</title>
+</head>
+<body style="background-color: #f7f7f7;" >
+
+  <div class="sign two_"  style="background-color: #f7f7f7; direction: ltr; "  >
+    <div class="sign_Img_Div">
+      <img src="Media/sign_in2.svg" alt="" class="sign_Img" >
+    </div>
+    <div class="sign_form">
+      <h2>هل أنت مستعد لخوض مغامرتك مع « <span class="highlight _3awn_Name" >عون</span> » والحصول على المميزات؟</h2>
+      <p>إنضم إلى منصتنا وابدأ بالتمتع بالمزايا الحصرية التي نوفرها لمستخدمينا!</p>
+
+      <div id="errorMessage" style="color: red; margin: 10px 0; display: none;"></div>
+      <div id="successMessage" style="color: green; margin: 10px 0; display: none;"></div>
+
+      <form id="signUpForm" action="" method="post" >
+
+        <p style="color: #d99b0e;">الإسم الكامل</p>
+      <input type="text" id="name" class="sign_input" required>
+      <p style="color: #d99b0e;">الإيميل</p>
+      <input type="email" id="email" class="sign_input" style="direction: ltr;" required>
+      <p style="color: #d99b0e;">كلمة السر</p>
+      <input type="password" id="password" class="sign_input" style="direction: ltr;" required>
+      <p style="color: #d99b0e;">تأكيد كلمة السر</p>
+      <input type="password" id="confirmPassword" class="sign_input" style="direction: ltr;" required>
+
+      <p style="color: #d99b0e;">● حدد نوع الحساب:</p>
+      <select name="accountType" id="accountType" class="sign_select" required>
+        <optgroup label="حدد نوع الحساب"></optgroup>
+        <option value="responsible">حساب مسؤول</option>
+        <option value="oldman">حساب كبير سن</option>
+        <option value="disabled">حساب ذو همة</option>
+      </select>
+
+      <div class="sign_agree">
+        <input type="checkbox" name="agree" id="agree_checkbox" required>
+        <label for="agree_checkbox">أوافق على <span style="color: #d99b0e; cursor: pointer;" ><a href="">الشروط والأحكام</a></span> الخاصة بمنصة عون.</label>
+      </div>
+
+      <button type="submit" class="sign_button" id="submitBtn">إنشاء حساب</button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <script src="api.js"></script>
+  <script>
+    document.getElementById('signUpForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const accountType = document.getElementById('accountType').value;
+      const submitBtn = document.getElementById('submitBtn');
+      const errorMsg = document.getElementById('errorMessage');
+      const successMsg = document.getElementById('successMessage');
+      
+      // Validate passwords match
+      if (password !== confirmPassword) {
+        errorMsg.textContent = 'كلمات السر غير متطابقة';
+        errorMsg.style.display = 'block';
+        return;
+      }
+      
+      // Hide previous messages
+      errorMsg.style.display = 'none';
+      successMsg.style.display = 'none';
+      
+      // Optimistic UI update - disable button and show loading
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'جاري إنشاء الحساب...';
+      
+      try {
+        const response = await window.API.auth.signup(name, email, password, confirmPassword, accountType);
+        
+        // Save token and user info
+        window.API.saveAuthToken(response.token);
+        window.API.saveUserInfo(response.user);
+        
+        // Show success message
+        successMsg.textContent = response.message || 'تم إنشاء الحساب بنجاح!';
+        successMsg.style.display = 'block';
+        
+        // Redirect to home page after short delay
+        setTimeout(() => {
+          window.location.href = 'Home.html';
+        }, 1000);
+        
+      } catch (error) {
+        // Revert optimistic update
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        
+        // Show error message
+        errorMsg.textContent = error.message || 'حدث خطأ أثناء إنشاء الحساب';
+        errorMsg.style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>
