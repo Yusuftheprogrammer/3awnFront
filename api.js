@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = '3awn-production.up.railway.app:8080/api';
+const API_BASE_URL = 'https://3awn-production.up.railway.app/api';
 
 // Utility function to get auth token from localStorage
 const getAuthToken = () => {
