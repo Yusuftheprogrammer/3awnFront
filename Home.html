@@ -804,13 +804,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (response.linkedAccounts && response.linkedAccounts.length > 0) {
           linkedAccountsList.innerHTML = response.linkedAccounts.map(account => `
             <div class="a_linkedAccount">
-              <div>
                 <strong class="a_linkedAccount_name">${account.name}</strong>
                 <p class="a_linkedAccount_email">${account.email}</p>
                 <span class="a_linkedAccount_type">
                   ${account.type === 'oldman' ? 'كبير سن' : 'ذو همة'}
                 </span>
-              </div>
             </div>
           `).join('');
         } else {
