@@ -994,11 +994,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
  // أضف المتغير بالداخل لحفظ النوع
-let currentChatUserType = null; 
+let currentChatUserType = null; // متغير عام جديد لحفظ النوع
 
 window.selectConversation = function(userId, userName, accountType) {
     currentChatUserId = userId;
-    currentChatUserType = accountType; // تخزين النوع هنا
+    currentChatUserType = accountType; // حفظ النوع هنا (مثل 'oldman' أو 'responsible')
 
     const chatContainer = document.getElementById('chatContainer');
     chatContainer.innerHTML = ''; 
@@ -1100,7 +1100,7 @@ window.selectConversation = function(userId, userName, accountType) {
 socket.emit('send_message', {
     receiverId: currentChatUserId,
     message: messageText,
-    // تحويل accountType من الفرونت إند إلى الاسم الذي يتوقعه الموديل في الباك إند
+    // هذا السطر هو الحل: تحويل القيمة لتطابق الـ Enum في السيرفر
     receiverModel: currentChatUserType === 'responsible' ? 'Responsible' : 
                    currentChatUserType === 'oldman' ? 'Oldman' : 'Disabled'
 });
