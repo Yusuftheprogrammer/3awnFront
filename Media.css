@@ -293,6 +293,10 @@
 .aGame_Name{
   font-size: 20px;
 }
+.a_linkedAccount{
+  width: 100%;
+  overflow-x: auto;
+}
 .a_game p{
   font-size: 16px;
 }
@@ -488,4 +492,5 @@
 
 
 }
+
 
