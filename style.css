@@ -595,11 +595,11 @@ body{
 /* قسم الأخبار */
 
 .NewsSection_title h2 {
-  color: #14415a;
+  color: white;
 }
 
 .NewsSection_title p{
-  color: rgb(100, 100, 100);
+  color: white;
   font-size: 20px;
 }
 .News{
@@ -827,3 +827,4 @@ body{
   border-radius: 10px;
   display: none;
 }
+
