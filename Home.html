@@ -974,7 +974,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (response.conversations && response.conversations.length > 0) {
           conversationsContainer.innerHTML = response.conversations.map(conv => `
             <div style="padding: 10px; margin-bottom: 5px; background: white; border-radius: 5px; cursor: pointer; border: 1px solid #ddd; ${currentChatUserId === conv.userId ? 'border-color: #d99b0e;' : ''}" 
-                 onclick="selectConversation('${conv.userId}', '${conv.userName}')">
+                 onclick="selectConversation('${conv.userId}', '${conv.userName}', '${conv.accountType}')"
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                   <strong style="color: #14415a;">${conv.userName}</strong>
@@ -993,20 +993,23 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // Select conversation
-    window.selectConversation = function(userId, userName) {
-      currentChatUserId = userId;
+ // أضف المتغير بالداخل لحفظ النوع
+let currentChatUserType = null; 
 
-      const chatContainer = document.getElementById('chatContainer');
-      chatContainer.innerHTML = ''; // 🔥 مهم جدًا
+window.selectConversation = function(userId, userName, accountType) {
+    currentChatUserId = userId;
+    currentChatUserType = accountType; // تخزين النوع هنا
 
-      document.getElementById('currentChatInfo').style.display = 'block';
-      document.getElementById('currentChatUserName').textContent = userName;
-      document.getElementById('messageInput').disabled = false;
-      document.getElementById('sendBtn').disabled = false;
+    const chatContainer = document.getElementById('chatContainer');
+    chatContainer.innerHTML = ''; 
 
-      loadChatMessages(userId);
-    };
+    document.getElementById('currentChatInfo').style.display = 'block';
+    document.getElementById('currentChatUserName').textContent = userName;
+    document.getElementById('messageInput').disabled = false;
+    document.getElementById('sendBtn').disabled = false;
+
+    loadChatMessages(userId);
+};
 
 
     // Load chat messages for specific user
@@ -1093,11 +1096,14 @@ document.addEventListener('DOMContentLoaded', function() {
       sendBtn.textContent = 'جاري الإرسال...';
       
       // Send via Socket.IO
-      socket.emit('send_message', {
-        receiverId: currentChatUserId,
-        message: messageText
-      });
-      
+      // داخل حدث click الخاص بـ sendBtn
+socket.emit('send_message', {
+    receiverId: currentChatUserId,
+    message: messageText,
+    // تحويل accountType من الفرونت إند إلى الاسم الذي يتوقعه الموديل في الباك إند
+    receiverModel: currentChatUserType === 'responsible' ? 'Responsible' : 
+                   currentChatUserType === 'oldman' ? 'Oldman' : 'Disabled'
+});
       // Re-enable button after a short delay (message_sent event will handle confirmation)
       setTimeout(() => {
         sendBtn.disabled = false;
