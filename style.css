@@ -758,6 +758,7 @@ body{
   text-align: center; color: #999;
 }
 .a_linkedAccount{
+  display: block;
   background: white;
   background-color: transparent;
   /*width: 33%;*/
@@ -765,23 +766,25 @@ body{
   border: solid 2px #d99b0e;
   border-radius: 12px;
   padding: 2% 2%;
-  display: flex;
   justify-content:
   space-between;
   align-items: center;
 }
 .a_linkedAccount_name{
   color: #14415a;
+  text-align: center;
   font-size: 18px;
 }
 .a_linkedAccount_email{
   color: #666;
   margin: 5px 0;
+  text-align: center;
 }
 .a_linkedAccount_type{
   background: #d99b0e;
   color: white;
   padding: 3px 10px;
+  text-align: center;
   border-radius: 5px;
   font-size: 15px;
 }
@@ -827,4 +830,6 @@ body{
   border-radius: 10px;
   display: none;
 }
-
+#chatPlaceholder{
+  color: gray;
+}
