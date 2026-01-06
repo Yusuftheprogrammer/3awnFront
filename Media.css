@@ -132,6 +132,9 @@
 .a_linkedAccount_email{
   font-size: 15px;
 }
+.Note{
+  font-size: 19px;
+}
 }
 
 @media screen and (min-width : 100px) /* 300px min */ and (max-width : 524px){
@@ -293,6 +296,9 @@
   overflow-x: auto;
 }
 .a_linkedAccount_email{
+  font-size: 15px;
+}
+.Note{
   font-size: 15px;
 }
 }
@@ -463,6 +469,9 @@
   font-size: 15px;
 }
 
+.Note{
+  font-size: 15px;
+}
 }
 
 

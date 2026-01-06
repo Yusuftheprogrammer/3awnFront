@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tableOverlay.classList.remove('active');
         }
     });
-            //document.head.appendChild(style);
+            document.head.appendChild(style);
 
     </script>
 
@@ -500,7 +500,12 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
   
+  <center class="NewsSection_title" >
+  
 
+  <div class="news_section" id="newsSection">
+    <!-- News will be loaded here -->
+  </div>
 
   <!-- Account Linking Section (for responsible users only) -->
   <div id="accountLinkingSection">
@@ -639,13 +644,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       // Get API base URL
-      const API_BASE_URL = 'https://3awn-production.up.railway.app:8080/api'; // Change this to your backend URL
+      const API_BASE_URL = 'http://localhost:5000'; // Change this to your backend URL
       
-      socket = io("https://3awn-production.up.railway.app", {
+      socket = io(API_BASE_URL, {
         auth: {
           token: token
         },
-        transports: ['websocket']
+        transports: ['websocket', 'polling']
       });
 
       socket.on('connect', () => {
@@ -974,7 +979,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (response.conversations && response.conversations.length > 0) {
           conversationsContainer.innerHTML = response.conversations.map(conv => `
             <div style="padding: 10px; margin-bottom: 5px; background: white; border-radius: 5px; cursor: pointer; border: 1px solid #ddd; ${currentChatUserId === conv.userId ? 'border-color: #d99b0e;' : ''}" 
-                 onclick="selectConversation('${conv.userId}', '${conv.userName}', '${conv.accountType}')"
+                 onclick="selectConversation('${conv.userId}', '${conv.userName}')">
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                   <strong style="color: #14415a;">${conv.userName}</strong>
@@ -984,7 +989,6 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
           `).join('');
-          console.log("نوع الحساب المستلم:", conv.accountType);
         } else {
           conversationsContainer.innerHTML = '<p style="text-align: center; color: #999;">لا توجد محادثات بعد. قم بربط حساب للبدء.</p>';
         }
@@ -994,23 +998,20 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
- // أضف المتغير بالداخل لحفظ النوع
-let currentChatUserType = null; // متغير عام جديد لحفظ النوع
+    // Select conversation
+    window.selectConversation = function(userId, userName) {
+      currentChatUserId = userId;
 
-window.selectConversation = function(userId, userName, accountType) {
-    currentChatUserId = userId;
-    currentChatUserType = accountType; // حفظ النوع هنا (مثل 'oldman' أو 'responsible')
+      const chatContainer = document.getElementById('chatContainer');
+      chatContainer.innerHTML = ''; // 🔥 مهم جدًا
 
-    const chatContainer = document.getElementById('chatContainer');
-    chatContainer.innerHTML = ''; 
+      document.getElementById('currentChatInfo').style.display = 'block';
+      document.getElementById('currentChatUserName').textContent = userName;
+      document.getElementById('messageInput').disabled = false;
+      document.getElementById('sendBtn').disabled = false;
 
-    document.getElementById('currentChatInfo').style.display = 'block';
-    document.getElementById('currentChatUserName').textContent = userName;
-    document.getElementById('messageInput').disabled = false;
-    document.getElementById('sendBtn').disabled = false;
-
-    loadChatMessages(userId);
-};
+      loadChatMessages(userId);
+    };
 
 
     // Load chat messages for specific user
@@ -1097,14 +1098,11 @@ window.selectConversation = function(userId, userName, accountType) {
       sendBtn.textContent = 'جاري الإرسال...';
       
       // Send via Socket.IO
-      // داخل حدث click الخاص بـ sendBtn
-socket.emit('send_message', {
-    receiverId: currentChatUserId,
-    message: messageText,
-    // هذا السطر هو الحل: تحويل القيمة لتطابق الـ Enum في السيرفر
-    receiverModel: currentChatUserType === 'responsible' ? 'Responsible' : 
-                   currentChatUserType === 'oldman' ? 'Oldman' : 'Disabled'
-});
+      socket.emit('send_message', {
+        receiverId: currentChatUserId,
+        message: messageText
+      });
+      
       // Re-enable button after a short delay (message_sent event will handle confirmation)
       setTimeout(() => {
         sendBtn.disabled = false;
@@ -1210,6 +1208,18 @@ socket.emit('send_message', {
     loadNews();
     loadConversations();
   </script>
+
+
+
+  <div class="Note">
+    <h2>ملاحظة هامة:</h2>
+    <h3>الموقع مبرمج بشكل سليم تماما، في حالة ما اذا واجهتك مشكلة فإن الأمر يعود إلى الاستضافة التي لا تستعمل الـ(soket) بشكل صحيح.. يمكن أن تواجهك مشكلة في واحدة من أمرين وهما:</h3>
+    <ul>
+      <li>- خاصية الـ(شات)</li>
+      <li>- خاصية (زر الإنذار)</li>
+    </ul>
+    <h3>شكرًا لتفهمكم :)</h3>
+  </div>
 
 
 

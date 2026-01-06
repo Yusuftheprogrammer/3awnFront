@@ -833,3 +833,11 @@ body{
 #chatPlaceholder{
   color: gray;
 }
+.Note{
+  background-color: #b24545;
+  border-radius: 12px;
+  padding: 2%;
+  margin-bottom: 20px;
+  color: white;
+  width: 80%;
+}
